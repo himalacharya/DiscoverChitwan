@@ -26,11 +26,11 @@ public class SeeAndDo extends AppCompatActivity {
         ListView listView= (ListView) findViewById(R.id.seenanddolistView);
         listView.setAdapter(adapter);
 
-        whatToDo.add(new Location("Elephant Back Safari","Sauraha"));
-        whatToDo.add(new Location("Jeep Safari","Kassara"));
-        whatToDo.add(new Location("Visit Elephant Breeding Centre","Baghmara"));
-        whatToDo.add(new Location("narayani Motor Boat","Jalbire"));
-        whatToDo.add(new Location("Village Walk","Korak"));
+        whatToDo.add(new Location("Elephant Back Safari","Sauraha",R.drawable.family_daughter));
+        whatToDo.add(new Location("Jeep Safari","Kassara",R.drawable.family_mother));
+        whatToDo.add(new Location("Visit Elephant Breeding Centre","Baghmara",R.drawable.family_older_sister));
+        whatToDo.add(new Location("narayani Motor Boat","Jalbire",R.drawable.color_dusty_yellow));
+        whatToDo.add(new Location("Village Walk","Korak",R.drawable.number_ten));
 
 
 

@@ -1,12 +1,12 @@
 package com.example.himalacharya.discoverchitwan;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -40,10 +40,25 @@ public class LocationAdapter extends ArrayAdapter<Location> {
 
         nameTextView.setText(location.getName());
 
-        TextView locationTextView= (TextView) listItemView.findViewById(R.id.location);
+        TextView locationTextView= (TextView) listItemView.findViewById(R.id.address);
 
-        locationTextView.setText(location.getLocation());
+        locationTextView.setText(location.getAddress());
 
+        ImageView imageView= (ImageView) listItemView.findViewById(R.id.images);
+
+        if (location.hasImage()) {
+
+            //set the Imageview to the image resource specified in the current word
+            imageView.setImageResource(location.getImageResourceId());
+
+            //make sure image is visible
+
+            imageView.setVisibility(View.VISIBLE);
+        }else{
+            //Otherwise hide the image
+            imageView.setVisibility(View.GONE);
+        }
+              //Return the whole list
         return listItemView;
     }
 }

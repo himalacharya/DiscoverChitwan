@@ -4,4 +4,8 @@
     <string name="dine">Dine</string>
     <string name="shop">Shop</string>
     <string name="stay">Stay</string>
+    <string name="seeanddo">See And Do</string>
+    <string name="activity_dine">Dine</string>
+    <string name="activity_shop">Shop</string>
+    <string name="activity_stay">Stay</string>
 </resources>

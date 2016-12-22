@@ -6,7 +6,14 @@ package com.example.himalacharya.discoverchitwan;
 
 public class Location {
     public String name;
-    public String location;
+    public String address;
+    public int imageResourceId=No_IMAGE_PROVIDED;
+
+    private static final int No_IMAGE_PROVIDED=-1;
+
+    public int getImageResourceId() {
+        return imageResourceId;
+    }
 
     public String getName() {
         return name;
@@ -16,16 +23,22 @@ public class Location {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getAddress() {
+        return address;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public Location(String name, String location) {
+    public Location(String name, String address, int imageResourceId) {
         this.name = name;
-        this.location = location;
+        this.address = address;
+        this.imageResourceId=imageResourceId;
+    }
+
+    //returns whether it has image or not
+    public boolean hasImage(){
+        return imageResourceId!=No_IMAGE_PROVIDED;
     }
 }

@@ -8,6 +8,6 @@ public class Stay extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_location);
+        setContentView(R.layout.activity_stay);
     }
 }
