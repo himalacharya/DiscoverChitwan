@@ -8,4 +8,7 @@
     <string name="activity_dine">Dine</string>
     <string name="activity_shop">Shop</string>
     <string name="activity_stay">Stay</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
