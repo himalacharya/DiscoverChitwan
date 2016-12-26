@@ -1,6 +1,8 @@
 package com.example.himalacharya.discoverchitwan;
 
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //FInd the view that shows the category
+       /* //FInd the view that shows the category
         Button seeAndDoActivity= (Button) findViewById(R.id.activity_see_and_do);
         seeAndDoActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +65,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(stayIntent);
             }
         });
+*/
+        //Find the view pager that will allow the user to swipe between fragments
+        ViewPager viewPager= (ViewPager) findViewById(R.id.viewpager);
 
+        //Create an adapter that knows which fragment should be shown on each page
+        SimpleFragmentPagerAdapter adapter=new SimpleFragmentPagerAdapter(this,getSupportFragmentManager());
+
+        //Set the adapter onto the view pager
+        viewPager.setAdapter(adapter);
+
+        //Find the Tab Layout that shows the tabs
+        TabLayout tabLayout= (TabLayout) findViewById(R.id.tabs);
+
+        //Connect the tab layout with the viewPager
+        //   1. Update the tab layout when the view pager is swiped
+        //   2. Update the view pager when a tab is selected
+        //   3. Set the tab layout's tab names with the view pager's adapter's titles
+        //      by calling onPageTitle()
+        tabLayout.setupWithViewPager(viewPager);
     }
 }
 

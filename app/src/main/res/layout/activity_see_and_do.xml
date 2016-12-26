@@ -23,7 +23,8 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/seenanddolistView">
+        android:id="@+id/seenanddolistView"
+        android:listSelector="#00000000">
 
     </ListView>
 
