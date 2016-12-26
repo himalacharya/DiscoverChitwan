@@ -35,11 +35,11 @@ public class ShopFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.activity_shop,container,false);
 
-        Intent intent=new Intent(getActivity(),ShoppingActivity.class);
-        startActivity(intent);
+       /* Intent intent=new Intent(getActivity(),ShoppingActivity.class);
+        startActivity(intent);*/
 
         //displaying Database info
-       // displayDatabaseinfo();
+       displayDatabaseinfo();
         return rootView;
 
     }
