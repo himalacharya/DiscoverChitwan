@@ -40,7 +40,6 @@ public class SeeAndDoFragment extends Fragment {
         whatToDo.add(new Location("Visit Elephant Breeding Centre","Baghmara",R.drawable.family_older_sister));
         whatToDo.add(new Location("narayani Motor Boat","Jalbire",R.drawable.color_dusty_yellow));
         whatToDo.add(new Location("Village Walk","Korak",R.drawable.number_ten));
-
         return  rootView;
 
 
