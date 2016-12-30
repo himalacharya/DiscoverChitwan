@@ -30,4 +30,7 @@
     <string name="e_g_1200">e.g. 1200</string>
     <string name="description">Description</string>
     <string name="title_activity_test">test</string>
+    <string name="save">Save</string>
+    <string name="add_another_order">Add another order</string>
+    <string name="title_activity_shopping_editor">ShoppingEditor</string>
 </resources>

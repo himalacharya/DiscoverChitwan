@@ -19,6 +19,15 @@
             android:name=".Shopping"
             android:label="@string/title_activity_shopping"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ShoppingEditor"
+            android:label="@string/title_activity_shopping_editor"
+            android:theme="@style/AppTheme"></activity>
+        
+        <provider
+            android:authorities="com.example.himalacharya.discoverchitwan"
+            android:name=".data.ShoppingProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>
