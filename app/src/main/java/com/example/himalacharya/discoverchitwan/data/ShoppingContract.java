@@ -1,5 +1,6 @@
 package com.example.himalacharya.discoverchitwan.data;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
@@ -8,14 +9,26 @@ import android.provider.BaseColumns;
 
 public final class ShoppingContract {
 
-    //To prevent someone from accidentally inisitaing
-    //contract classs, making the calss constructor private
+    public static final String CONTENT_AUTHORITY="com.example.himalacharya.discoverchitwan";
+
+    public static final Uri BASE_CONTENT_URI=Uri.parse("content://"+CONTENT_AUTHORITY);
+
+    //Path_TableName
+    public static final String PATH_SHOPPING="shoppinglist";
+
+
+    //To prevent someone from accidentally initiating
+    //contract class, making the calss constructor private
 
 
     private ShoppingContract() {
     }
 
     public static class ShoppingEntry implements BaseColumns{
+
+        //completing CONTENT_URI
+        public static final Uri CONTENT_URI=Uri.withAppendedPath(BASE_CONTENT_URI,PATH_SHOPPING);
+
         public static final String TABLE_NAME="shoppinglist";
         public static final String _ID=BaseColumns._ID;
         public static final String COLUMN_NAME="name";

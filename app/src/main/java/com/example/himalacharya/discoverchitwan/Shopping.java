@@ -55,8 +55,8 @@ public class Shopping extends AppCompatActivity {
 
 
         //Get the data repository in write mode
-        SQLiteDatabase database = shoppingDBHelper.getWritableDatabase();
-
+        /*SQLiteDatabase database = shoppingDBHelper.getWritableDatabase();
+*/
 
         String[] projections= {
                 ShoppingContract.ShoppingEntry._ID,
@@ -67,15 +67,17 @@ public class Shopping extends AppCompatActivity {
         };
 
         //Performs this  sql query
-        Cursor cursor = database.query(ShoppingContract.ShoppingEntry.TABLE_NAME,
+      /*  Cursor cursor = database.query(ShoppingContract.ShoppingEntry.TABLE_NAME,
                 projections,
                 null,
                 null,
                 null,
                 null,
-                null);
+                null);*/
 
-        TextView displayView = (TextView) findViewById(R.id.text_view_product);
+        Cursor cursor=getContentResolver().query(ShoppingContract.ShoppingEntry.CONTENT_URI,projections,null,null,null);
+
+        TextView displayView = (TextView) findViewById(R.id.item_shopping_productname);
 
         try {
 

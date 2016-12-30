@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/text_view_product"
+        android:id="@+id/item_shopping_productname"
         android:layout_weight="0.2"
         />
     <LinearLayout
