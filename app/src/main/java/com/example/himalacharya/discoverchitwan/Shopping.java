@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,9 +22,7 @@ import com.example.himalacharya.discoverchitwan.data.ShoppingDBHelper;
 
 public class Shopping extends AppCompatActivity {
 
-    //To access database , first initiated the subclass of SQLITEOpenhelper
 
-    ShoppingDBHelper shoppingDBHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +44,8 @@ public class Shopping extends AppCompatActivity {
         });
 
 
-        shoppingDBHelper = new ShoppingDBHelper(this);
 
+       // insertProduct();
         //displaying Database info
         displayDatabaseinfo();
     }
@@ -77,9 +76,12 @@ public class Shopping extends AppCompatActivity {
 
         Cursor cursor=getContentResolver().query(ShoppingContract.ShoppingEntry.CONTENT_URI,projections,null,null,null);
 
-        TextView displayView = (TextView) findViewById(R.id.item_shopping_productname);
+        TextView displayView = (TextView) findViewById(R.id.display);
 
-        try {
+        int count=cursor.getCount();
+        displayView.setText("No of row "+count);
+
+        /*try {
 
             Log.e("test", cursor.getCount() + "");
             int coount = cursor.getCount();
@@ -119,14 +121,14 @@ public class Shopping extends AppCompatActivity {
 
             cursor.close();
         }
-
+*/
 
     }
 
     private void insertProduct() {
-        //Get the data repository in write mode
+       /* //Get the data repository in write mode
         SQLiteDatabase database = shoppingDBHelper.getWritableDatabase();
-
+*/
         //Create a new map of values, where column names are the keys
 
         ContentValues values = new ContentValues();
@@ -136,11 +138,12 @@ public class Shopping extends AppCompatActivity {
         values.put(ShoppingContract.ShoppingEntry.COLUMN_DESCRIPTION, " Kashmeree ");
 
 
-        //Insert the new row, returning the primary key value of the new row
+       /* //Insert the new row, returning the primary key value of the new row
         long newRowId = database.insert(ShoppingContract.ShoppingEntry.TABLE_NAME, null, values);
-
+*/
+        Uri uri=getContentResolver().insert(ShoppingContract.ShoppingEntry.CONTENT_URI,values);
         Toast.makeText(this, "Successful", Toast.LENGTH_SHORT).show();
-        Log.v("Shopping ", "New RowID " + newRowId);
+
     }
 
     @Override
@@ -175,7 +178,7 @@ public class Shopping extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        shoppingDBHelper.close();
+
         super.onDestroy();
     }
 }

@@ -2,6 +2,7 @@ package com.example.himalacharya.discoverchitwan;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -30,9 +31,7 @@ public class ShoppingEditor extends AppCompatActivity {
     private EditText productDescription;
 
     //Create database helper
-    ShoppingDBHelper shoppingDBHelper=new ShoppingDBHelper(this);
-
-
+    ShoppingDBHelper shoppingDBHelper = new ShoppingDBHelper(this);
 
 
     @Override
@@ -52,57 +51,56 @@ public class ShoppingEditor extends AppCompatActivity {
         });*/
 
         //Find all relevant views that we will need to read user input from
-        productNameText= (EditText) findViewById(R.id.product_name_text);
-        productPriceText= (EditText) findViewById(R.id.price_input);
-        productDescription= (EditText) findViewById(R.id.description_input);
+        productNameText = (EditText) findViewById(R.id.product_name_text);
+        productPriceText = (EditText) findViewById(R.id.price_input);
+        productDescription = (EditText) findViewById(R.id.description_input);
     }
 
-    private void insertProduct(){
+    private void insertProduct() {
         //Read from input fields
         //Use trim to eliminate leading or trailing white space
-        String productnameString=productNameText.getText().toString().trim();
-        String productpriceString=productPriceText.getText().toString().trim();
-        String productdescriptionString=productDescription.getText().toString().trim();
+        String productnameString = productNameText.getText().toString().trim();
+        String productpriceString = productPriceText.getText().toString().trim();
+        String productdescriptionString = productDescription.getText().toString().trim();
 
-        int productpriceInt=Integer.parseInt(productpriceString);
+        int productpriceInt = Integer.parseInt(productpriceString);
 
-
-        //Get the database in writemode
+        /*//Get the database in writemode
         SQLiteDatabase database=shoppingDBHelper.getWritableDatabase();
-
+*/
         //Create a new map of values, where column names are the keys
 
-        ContentValues values=new ContentValues();
-        values.put(ShoppingContract.ShoppingEntry.COLUMN_NAME,productnameString);
-        values.put(ShoppingContract.ShoppingEntry.COLUMN_PRICE,productpriceInt);
+        ContentValues values = new ContentValues();
+        values.put(ShoppingContract.ShoppingEntry.COLUMN_NAME, productnameString);
+        values.put(ShoppingContract.ShoppingEntry.COLUMN_PRICE, productpriceInt);
         values.put(ShoppingContract.ShoppingEntry.COLUMN_IN_STOCK, ShoppingContract.ShoppingEntry.STOCK_IN);
-        values.put(ShoppingContract.ShoppingEntry.COLUMN_DESCRIPTION,productdescriptionString);
-
-        //Insert the new row, returning the primary key value of the new row
-        long newRowId=database.insert(ShoppingContract.ShoppingEntry.TABLE_NAME,null,values);
+        values.put(ShoppingContract.ShoppingEntry.COLUMN_DESCRIPTION, productdescriptionString);
 
 
-        if(newRowId==-1){
-            Toast.makeText(this,"Error in saving product ",Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this,"Successful",Toast.LENGTH_SHORT).show();
+        //Insert a new product into the provider,returning the content URI for the new product
+
+        Uri uri = getContentResolver().insert(ShoppingContract.ShoppingEntry.CONTENT_URI, values);
+
+
+        if (uri == null) {
+            Toast.makeText(this, "Error in saving product ", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Successful", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(this,"Successful",Toast.LENGTH_SHORT).show();
-        Log.v("Shopping Editor", "New RowID "+newRowId);
-
+        Toast.makeText(this, "Successful", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_shopping_edit,menu);
+        getMenuInflater().inflate(R.menu.menu_shopping_edit, menu);
         return true;
     }
 
     @Override
 
-    public boolean onOptionsItemSelected(MenuItem menuItem){
-        switch (menuItem.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
             case R.id.action_save:
 
                 //save product to database
