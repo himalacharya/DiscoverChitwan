@@ -1,4 +1,4 @@
-package com.example.himalacharya.discoverchitwan;
+package com.example.himalacharya.discoverchitwan.ui;
 
 
 import android.os.Bundle;
@@ -7,7 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.example.himalacharya.discoverchitwan.R;
+import com.example.himalacharya.discoverchitwan.adapter.Location;
+import com.example.himalacharya.discoverchitwan.adapter.LocationAdapter;
 
 import java.util.ArrayList;
 

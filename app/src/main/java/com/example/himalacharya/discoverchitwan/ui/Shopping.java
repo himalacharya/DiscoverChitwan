@@ -1,24 +1,24 @@
-package com.example.himalacharya.discoverchitwan;
+package com.example.himalacharya.discoverchitwan.ui;
 
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.himalacharya.discoverchitwan.R;
+import com.example.himalacharya.discoverchitwan.adapter.ProductCursorAdapter;
 import com.example.himalacharya.discoverchitwan.data.ShoppingContract;
-import com.example.himalacharya.discoverchitwan.data.ShoppingDBHelper;
 
 public class Shopping extends AppCompatActivity {
 
@@ -74,14 +74,32 @@ public class Shopping extends AppCompatActivity {
                 null,
                 null);*/
 
-        Cursor cursor=getContentResolver().query(ShoppingContract.ShoppingEntry.CONTENT_URI,projections,null,null,null);
+        Cursor cursor=getContentResolver().query(ShoppingContract.ShoppingEntry.CONTENT_URI,
+                projections,
+                null,
+                null,
+                null);
 
-        TextView displayView = (TextView) findViewById(R.id.display);
+        // Find ListView to populate
+        ListView shoppingListItems = (ListView) findViewById(R.id.shoplistView);
 
-        int count=cursor.getCount();
+        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
+        View emptyView = findViewById(R.id.empty_view);
+        shoppingListItems.setEmptyView(emptyView);
+
+        // Setup cursor adapter using cursor from last step
+        ProductCursorAdapter productCursorAdapter = new ProductCursorAdapter(this, cursor);
+
+        // Attach cursor adapter to the ListView
+        shoppingListItems.setAdapter(productCursorAdapter);
+
+
+       /* TextView displayView = (TextView) findViewById(R.id.display);
+
+      *//*  int count=cursor.getCount();
         displayView.setText("No of row "+count);
-
-        /*try {
+*//*
+        try {
 
             Log.e("test", cursor.getCount() + "");
             int coount = cursor.getCount();
@@ -122,7 +140,6 @@ public class Shopping extends AppCompatActivity {
             cursor.close();
         }
 */
-
     }
 
     private void insertProduct() {

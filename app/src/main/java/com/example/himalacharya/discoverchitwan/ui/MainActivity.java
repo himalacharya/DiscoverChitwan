@@ -1,4 +1,4 @@
-package com.example.himalacharya.discoverchitwan;
+package com.example.himalacharya.discoverchitwan.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.example.himalacharya.discoverchitwan.R;
+import com.example.himalacharya.discoverchitwan.adapter.DrawerItemCustomAdapter;
+import com.example.himalacharya.discoverchitwan.adapter.ObjectDrawerItem;
 
 
 public class MainActivity extends AppCompatActivity {

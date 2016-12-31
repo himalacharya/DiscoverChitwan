@@ -1,4 +1,4 @@
-package com.example.himalacharya.discoverchitwan;
+package com.example.himalacharya.discoverchitwan.adapter;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.himalacharya.discoverchitwan.R;
 
 import java.util.ArrayList;
 

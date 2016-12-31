@@ -1,4 +1,4 @@
-package com.example.himalacharya.discoverchitwan;
+package com.example.himalacharya.discoverchitwan.ui;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.himalacharya.discoverchitwan.R;
 import com.example.himalacharya.discoverchitwan.data.ShoppingContract;
 import com.example.himalacharya.discoverchitwan.data.ShoppingDBHelper;
 

@@ -1,4 +1,4 @@
-package com.example.himalacharya.discoverchitwan;
+package com.example.himalacharya.discoverchitwan.adapter;
 
 /**
  * Created by Himal Acharya on 2016-12-22.

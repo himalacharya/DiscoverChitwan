@@ -1,4 +1,4 @@
-package com.example.himalacharya.discoverchitwan;
+package com.example.himalacharya.discoverchitwan.ui;
 
 
 import android.os.Bundle;
@@ -8,13 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.himalacharya.discoverchitwan.R;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DineFragment extends Fragment {
+public class StayFragment extends Fragment {
 
 
-    public DineFragment() {
+    public StayFragment() {
         // Required empty public constructor
     }
 
@@ -22,8 +24,7 @@ public class DineFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView =inflater.inflate(R.layout.activity_dine,container,false);
-
+        View rootView =inflater.inflate(R.layout.activity_stay,container,false);
         return rootView;
 
     }
