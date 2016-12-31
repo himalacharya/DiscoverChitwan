@@ -23,7 +23,7 @@ public class ProductCursorAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         // TODO: Fill out this method and return the list item view (instead of null)
-        return LayoutInflater.from(context).inflate(R.layout.listview_location_shopping,parent,false);
+        return LayoutInflater.from(context).inflate(R.layout.listview_location_shopping, parent, false);
 
 
     }
@@ -42,16 +42,16 @@ public class ProductCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         //Find the fields to populate in inflated template
-        TextView tvProductName= (TextView) view.findViewById(R.id.item_shopping_productname);
-        TextView tvProductPrice= (TextView) view.findViewById(R.id.item_shopping_price);
-        TextView tvProductStock= (TextView) view.findViewById(R.id.item_shopping_stock);
-        TextView tvProductDescription= (TextView) view.findViewById(R.id.item_shopping_description);
+        TextView tvProductName = (TextView) view.findViewById(R.id.item_shopping_productname);
+        TextView tvProductPrice = (TextView) view.findViewById(R.id.item_shopping_price);
+        TextView tvProductStock = (TextView) view.findViewById(R.id.item_shopping_stock);
+        TextView tvProductDescription = (TextView) view.findViewById(R.id.item_shopping_description);
 
         //Extract properties from Cursor
-        String productName=cursor.getString(cursor.getColumnIndexOrThrow(ShoppingContract.ShoppingEntry.COLUMN_NAME));
-        int productPrice=cursor.getInt(cursor.getColumnIndexOrThrow(ShoppingContract.ShoppingEntry.COLUMN_PRICE));
-        int productStock=cursor.getInt(cursor.getColumnIndexOrThrow(ShoppingContract.ShoppingEntry.COLUMN_IN_STOCK));
-        String productDescription=cursor.getString(cursor.getColumnIndexOrThrow(ShoppingContract.ShoppingEntry.COLUMN_DESCRIPTION));
+        String productName = cursor.getString(cursor.getColumnIndexOrThrow(ShoppingContract.ShoppingEntry.COLUMN_NAME));
+        int productPrice = cursor.getInt(cursor.getColumnIndexOrThrow(ShoppingContract.ShoppingEntry.COLUMN_PRICE));
+        int productStock = cursor.getInt(cursor.getColumnIndexOrThrow(ShoppingContract.ShoppingEntry.COLUMN_IN_STOCK));
+        String productDescription = cursor.getString(cursor.getColumnIndexOrThrow(ShoppingContract.ShoppingEntry.COLUMN_DESCRIPTION));
 
 
         //Populated field with extracted properties
