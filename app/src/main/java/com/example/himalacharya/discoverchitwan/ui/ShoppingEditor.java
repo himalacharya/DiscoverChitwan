@@ -1,6 +1,7 @@
 package com.example.himalacharya.discoverchitwan.ui;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,17 +40,26 @@ public class ShoppingEditor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_editor);
+
+        //Examine the intent that was used to launch this activity
+        //in order to figure out if were creating a new product or editing an existing one
+        Intent intent=getIntent();
+        Uri currentProductUri=intent.getData();
+
+        //If the intent doesn't contain a product content URI, we know
+        //that we are creating a new product
+
+        if (currentProductUri==null){
+            setTitle(getString(R.string.add_product));
+        }else{
+
+            setTitle(getString(R.string.edit_product));
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+
 
         //Find all relevant views that we will need to read user input from
         productNameText = (EditText) findViewById(R.id.product_name_text);

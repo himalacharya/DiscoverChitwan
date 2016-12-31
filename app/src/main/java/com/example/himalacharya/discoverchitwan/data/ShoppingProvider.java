@@ -90,6 +90,13 @@ public class ShoppingProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("cannot qery known URI " + uri);
         }
+
+        //Set notofications URI in the Cursor
+        //so we know what Content URi the Cursor was created for
+        //If the data at this URI changes , then we need to update the cursor
+        cursor.setNotificationUri(getContext().getContentResolver(),uri);
+
+        //return the cursor
         return cursor;
     }
 
@@ -138,22 +145,41 @@ public class ShoppingProvider extends ContentProvider {
 
         final int match = sUriMatcher.match(uri);
 
+        //track the number of rows deleted
+        int rowsDeleted;
 
         switch (match) {
             case PRODUCT:
 
-                return sqLiteDatabase.delete(ShoppingContract.ShoppingEntry.TABLE_NAME, s, strings);
+                rowsDeleted= sqLiteDatabase.delete(ShoppingContract.ShoppingEntry.TABLE_NAME, s, strings);
 
+                //if 1 or more rows were deletd , then notify all listeners that the data
+                //at the given URI has changed
+
+                if (rowsDeleted!=0){
+                    getContext().getContentResolver().notifyChange(uri,null);
+                }
+
+                return rowsDeleted;
             case PRODUCT_ID:
                 // For the PRODUCT_ID code, extract out the ID from the URI,
                 // so we know which row to update. Selection will be "_id=?" and selection
                 // arguments will be a String array containing the actual ID.
                 s = ShoppingContract.ShoppingEntry._ID + "=?";
                 strings = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                return sqLiteDatabase.delete(ShoppingContract.ShoppingEntry.TABLE_NAME, s, strings);
+                rowsDeleted= sqLiteDatabase.delete(ShoppingContract.ShoppingEntry.TABLE_NAME, s, strings);
 
+                //if 1 or more rows were deletd , then notify all listeners that the data
+                //at the given URI has changed
+
+                if (rowsDeleted!=0){
+                    getContext().getContentResolver().notifyChange(uri,null);
+                }
+
+                return rowsDeleted;
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
+
 
 
         }
@@ -220,6 +246,11 @@ public class ShoppingProvider extends ContentProvider {
             Log.e("Error", "Failed to insert row for " + uri);
             return null;
         } else {
+            //notify all listeners that data has changed for the product content URI
+            //uri:content://com.example.himalcharya.discoverchitwan/shoppinglist
+            getContext().getContentResolver().notifyChange(uri,null);
+
+            //return the new URI with the ID of the newly inserted row appended at the end
             return ContentUris.withAppendedId(uri, newRowId);
         }
 
@@ -267,7 +298,17 @@ public class ShoppingProvider extends ContentProvider {
         SQLiteDatabase database = shoppingDBHelper.getWritableDatabase();
 
         // Returns the number of database rows affected by the update statement
-        return database.update(ShoppingContract.ShoppingEntry.TABLE_NAME, values, selection, selectionArgs);
+        //Get the number of rows affected
+        int rowsUpdated= database.update(ShoppingContract.ShoppingEntry.TABLE_NAME, values, selection, selectionArgs);
 
+        //If 1 or more rows were updated, then notify all listeners that the data at
+        //given URI has changed
+
+        if (rowsUpdated!=0){
+            getContext().getContentResolver().notifyChange(uri,null);
+        }
+
+        //return the number of rows updated
+        return rowsUpdated;
     }
 }

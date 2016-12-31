@@ -21,7 +21,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.ShoppingEditor"
-            android:label="@string/title_activity_shopping_editor"
+
             android:theme="@style/AppTheme"></activity>
         
         <provider

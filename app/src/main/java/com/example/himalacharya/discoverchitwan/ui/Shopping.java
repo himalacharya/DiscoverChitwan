@@ -1,17 +1,22 @@
 package com.example.himalacharya.discoverchitwan.ui;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,8 +25,11 @@ import com.example.himalacharya.discoverchitwan.R;
 import com.example.himalacharya.discoverchitwan.adapter.ProductCursorAdapter;
 import com.example.himalacharya.discoverchitwan.data.ShoppingContract;
 
-public class Shopping extends AppCompatActivity {
+public class Shopping extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final int PRODUCT_LOADER=0;
+
+    ProductCursorAdapter productCursorAdapter;
 
 
     @Override
@@ -43,19 +51,53 @@ public class Shopping extends AppCompatActivity {
             }
         });
 
+        // Find ListView to populate
+        ListView shoppingListItems = (ListView) findViewById(R.id.shoplistView);
+
+        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
+        View emptyView = findViewById(R.id.empty_view);
+        shoppingListItems.setEmptyView(emptyView);
+
+        // Setup cursor adapter using cursor from last step
+        productCursorAdapter = new ProductCursorAdapter(this, null);
+
+        // Attach cursor adapter to the ListView
+        shoppingListItems.setAdapter(productCursorAdapter);
+
+        //Setting item click listener
+        shoppingListItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent=new Intent(Shopping.this,ShoppingEditor.class);
+
+                //For content URi, with specific id
+                Uri currentProductUri= ContentUris.withAppendedId(ShoppingContract.ShoppingEntry.CONTENT_URI,id);
+
+                //set the URI on the data field of the intent
+                intent.setData(currentProductUri);
+
+                startActivity(intent);
+            }
+        });
+
+
+        //Kick off the loader
+        getSupportLoaderManager().initLoader(PRODUCT_LOADER,null,this);
+
+
 
 
        // insertProduct();
         //displaying Database info
-        displayDatabaseinfo();
+        //displayDatabaseinfo();
     }
 
-    private void displayDatabaseinfo() {
+/*    private void displayDatabaseinfo() {
 
 
         //Get the data repository in write mode
-        /*SQLiteDatabase database = shoppingDBHelper.getWritableDatabase();
-*/
+        *//*SQLiteDatabase database = shoppingDBHelper.getWritableDatabase();
+*//*
 
         String[] projections= {
                 ShoppingContract.ShoppingEntry._ID,
@@ -66,13 +108,13 @@ public class Shopping extends AppCompatActivity {
         };
 
         //Performs this  sql query
-      /*  Cursor cursor = database.query(ShoppingContract.ShoppingEntry.TABLE_NAME,
+      *//*  Cursor cursor = database.query(ShoppingContract.ShoppingEntry.TABLE_NAME,
                 projections,
                 null,
                 null,
                 null,
                 null,
-                null);*/
+                null);*//*
 
         Cursor cursor=getContentResolver().query(ShoppingContract.ShoppingEntry.CONTENT_URI,
                 projections,
@@ -94,11 +136,11 @@ public class Shopping extends AppCompatActivity {
         shoppingListItems.setAdapter(productCursorAdapter);
 
 
-       /* TextView displayView = (TextView) findViewById(R.id.display);
+       *//* TextView displayView = (TextView) findViewById(R.id.display);
 
-      *//*  int count=cursor.getCount();
+      *//**//*  int count=cursor.getCount();
         displayView.setText("No of row "+count);
-*//*
+*//**//*
         try {
 
             Log.e("test", cursor.getCount() + "");
@@ -139,8 +181,8 @@ public class Shopping extends AppCompatActivity {
 
             cursor.close();
         }
-*/
-    }
+*//*
+    }*/
 
     private void insertProduct() {
        /* //Get the data repository in write mode
@@ -177,7 +219,7 @@ public class Shopping extends AppCompatActivity {
             case R.id.action_insert_dummy_data:
                 //inserting data
                 insertProduct();
-                displayDatabaseinfo();
+                //displayDatabaseinfo();
                 return true;
 
             case R.id.action_delete_all_entries:
@@ -187,15 +229,44 @@ public class Shopping extends AppCompatActivity {
         return super.onOptionsItemSelected(menuItem);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        displayDatabaseinfo();
-    }
+
 
     @Override
     protected void onDestroy() {
 
         super.onDestroy();
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String[] projections= {
+                ShoppingContract.ShoppingEntry._ID,
+                ShoppingContract.ShoppingEntry.COLUMN_NAME,
+                ShoppingContract.ShoppingEntry.COLUMN_PRICE,
+                ShoppingContract.ShoppingEntry.COLUMN_IN_STOCK,
+                ShoppingContract.ShoppingEntry.COLUMN_DESCRIPTION
+        };
+
+        // This loader will execute the COntentProvider to query methd in a background thread
+        return new CursorLoader(this,   //Parent activity context
+                ShoppingContract.ShoppingEntry.CONTENT_URI, //Provides content URI to query
+                projections,//columns to include in the resulting cursor
+                null, //no selection clause
+                null, //no selection arguments
+                null);// default sort order
+
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        //Update ProductCursorAdapter with this new cursor containing updated product data
+        productCursorAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        //callback called when the data needs to be delted
+        productCursorAdapter.swapCursor(null);
+
     }
 }
