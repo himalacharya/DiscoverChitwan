@@ -78,6 +78,9 @@ public class ShoppingEditor extends AppCompatActivity implements LoaderManager.L
 
         if (mCurrentProductUri==null){
             setTitle(getString(R.string.add_product));
+
+            //Invalidate the options menu, so Dlete menu is hidden
+            invalidateOptionsMenu();
         } else{
             setTitle(getString(R.string.edit_product));
             // Initialize a loader to read the pet data from the database
@@ -173,6 +176,18 @@ public class ShoppingEditor extends AppCompatActivity implements LoaderManager.L
         getMenuInflater().inflate(R.menu.menu_shopping_edit, menu);
         return true;
     }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+         //if this is new Product,hide the "Delete "menu
+
+        if(mCurrentProductUri==null){
+            MenuItem menuItem=menu.findItem(R.id.action_delete);
+            menuItem.setVisible(false);
+
+        }
+        return true;
+     }
 
     @Override
 
