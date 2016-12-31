@@ -38,4 +38,7 @@
     <string name="edit_product">Edit a Product</string>
     <string name="update_failed">" Update Failed "</string>
     <string name="update_success">" Update Success "</string>
+    <string name="changes_quit_editing">Discard your changes and quit editing?</string>
+    <string name="discard">DISCARD</string>
+    <string name="keep_editing">KEEP EDITING</string>
 </resources>

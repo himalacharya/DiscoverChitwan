@@ -1,6 +1,7 @@
 package com.example.himalacharya.discoverchitwan.ui;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,11 +13,14 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -45,6 +49,17 @@ public class ShoppingEditor extends AppCompatActivity implements LoaderManager.L
     //Create database helper
     ShoppingDBHelper shoppingDBHelper = new ShoppingDBHelper(this);
 
+    // Boolean flag that keeps track of whether the product has been edited (true) or not (false)
+    private boolean productHasChanged=false;
+
+    //OnTouchListener that listens for any user touches on a View, implying that they are modifying
+    private View.OnTouchListener productTouchListener=new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            productHasChanged=true;
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +97,11 @@ public class ShoppingEditor extends AppCompatActivity implements LoaderManager.L
         productNameText = (EditText) findViewById(R.id.product_name_text);
         productPriceText = (EditText) findViewById(R.id.price_input);
         productDescription = (EditText) findViewById(R.id.description_input);
+
+        //For Touch Listeenr
+        productNameText.setOnTouchListener(productTouchListener);
+        productPriceText.setOnTouchListener(productTouchListener);
+        productDescription.setOnTouchListener(productTouchListener);
     }
 
     private void saveProduct() {
@@ -91,7 +111,13 @@ public class ShoppingEditor extends AppCompatActivity implements LoaderManager.L
         String productpriceString = productPriceText.getText().toString().trim();
         String productdescriptionString = productDescription.getText().toString().trim();
 
-        int productpriceInt = Integer.parseInt(productpriceString);
+        // If the weight is not provided by the user, don't try to parse the string into an
+        // integer value. Use 0 by default.
+        int productpriceInt=0;
+        if(!TextUtils.isEmpty(productpriceString)){
+             productpriceInt = Integer.parseInt(productpriceString);
+        }
+
 
         /*//Get the database in writemode
         SQLiteDatabase database=shoppingDBHelper.getWritableDatabase();
@@ -104,6 +130,11 @@ public class ShoppingEditor extends AppCompatActivity implements LoaderManager.L
         values.put(ShoppingContract.ShoppingEntry.COLUMN_IN_STOCK, ShoppingContract.ShoppingEntry.STOCK_IN);
         values.put(ShoppingContract.ShoppingEntry.COLUMN_DESCRIPTION, productdescriptionString);
 
+       if (mCurrentProductUri==null&& TextUtils.isEmpty(productnameString)&&TextUtils.isEmpty(productpriceString)
+               &&TextUtils.isEmpty(productdescriptionString)){
+
+            return;
+        }
         //Determine if this is a new or existing product by checking if mCurrentProductUri is null or nt
 
         if(mCurrentProductUri==null){
@@ -171,9 +202,28 @@ public class ShoppingEditor extends AppCompatActivity implements LoaderManager.L
 
 
             case android.R.id.home:
-                //Navigate back to parent Activity(Shopping)
-                NavUtils.navigateUpFromSameTask(this);
+                //if the product hasn't changed, continue with navigating up to parentactivity
+                //Shopping
+                if (!productHasChanged){
+                    NavUtils.navigateUpFromSameTask(this);
+                    return true;
+                }
+                // Otherwise if there are unsaved changes, setup a dialog to warn the user.
+                // Create a click listener to handle the user confirming that
+                // changes should be discarded.
+                DialogInterface.OnClickListener discardButtonClickListener =
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // User clicked "Discard" button, navigate to parent activity.
+                                NavUtils.navigateUpFromSameTask(ShoppingEditor.this);
+                            }
+                        };
+
+                // Show a dialog that notifies the user they have unsaved changes
+                showUnsavedChangesDialog(discardButtonClickListener);
                 return true;
+
         }
 
         return super.onOptionsItemSelected(menuItem);
@@ -240,4 +290,52 @@ public class ShoppingEditor extends AppCompatActivity implements LoaderManager.L
         productDescription.setText("");
 
     }
+
+
+    private void showUnsavedChangesDialog(
+            DialogInterface.OnClickListener discardButtonClickListener) {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the positive and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.changes_quit_editing);
+        builder.setPositiveButton(R.string.discard, discardButtonClickListener);
+        builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Keep editing" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+     @Override public void onBackPressed(){
+         //if porduct HAS n't been changed
+         if (!productHasChanged){
+             super.onBackPressed();
+             return;
+         }
+
+         // Otherwise if there are unsaved changes, setup a dialog to warn the user.
+         // Create a click listener to handle the user confirming that changes should be discarded.
+         DialogInterface.OnClickListener discardButtonClickListener =
+                 new DialogInterface.OnClickListener() {
+                     @Override
+                     public void onClick(DialogInterface dialogInterface, int i) {
+                         // User clicked "Discard" button, close the current activity.
+                         finish();
+                     }
+                 };
+
+         // Show dialog that there are unsaved changes
+         showUnsavedChangesDialog(discardButtonClickListener);
+     }
+
+
+
 }
