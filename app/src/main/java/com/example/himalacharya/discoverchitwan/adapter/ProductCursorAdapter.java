@@ -3,6 +3,7 @@ package com.example.himalacharya.discoverchitwan.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,10 @@ public class ProductCursorAdapter extends CursorAdapter {
         int productStock = cursor.getInt(cursor.getColumnIndexOrThrow(ShoppingContract.ShoppingEntry.COLUMN_IN_STOCK));
         String productDescription = cursor.getString(cursor.getColumnIndexOrThrow(ShoppingContract.ShoppingEntry.COLUMN_DESCRIPTION));
 
-
+        //Adding not written description in UI
+        if(TextUtils.isEmpty(productDescription)){
+            productDescription=context.getString(R.string.no_description_provided);
+        }
         //Populated field with extracted properties
         tvProductName.setText(productName);
         tvProductPrice.setText(String.valueOf(productPrice));

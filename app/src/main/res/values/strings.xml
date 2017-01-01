@@ -41,4 +41,9 @@
     <string name="changes_quit_editing">Discard your changes and quit editing?</string>
     <string name="discard">DISCARD</string>
     <string name="keep_editing">KEEP EDITING</string>
+    <string name="delete_dialog_message">Are you sure to do delete?</string>
+    <string name="error_deletion">error in deleting</string>
+    <string name="deletion_successful">Deletion successful</string>
+    <string name="delete_all_entries">Are you sure to delete all products</string>
+    <string name="no_description_provided">No Description Provided</string>
 </resources>

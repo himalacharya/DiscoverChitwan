@@ -2,6 +2,7 @@ package com.example.himalacharya.discoverchitwan.ui;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -205,6 +207,11 @@ public class Shopping extends AppCompatActivity implements LoaderManager.LoaderC
 
     }
 
+    public void deleteAllProduct(){
+        getContentResolver().delete(ShoppingContract.ShoppingEntry.CONTENT_URI,null,null);
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_shopping, menu);
@@ -223,7 +230,7 @@ public class Shopping extends AppCompatActivity implements LoaderManager.LoaderC
                 return true;
 
             case R.id.action_delete_all_entries:
-
+                showDeleteConfirmationDialog();
                 return true;
         }
         return super.onOptionsItemSelected(menuItem);
@@ -267,6 +274,38 @@ public class Shopping extends AppCompatActivity implements LoaderManager.LoaderC
     public void onLoaderReset(Loader<Cursor> loader) {
         //callback called when the data needs to be delted
         productCursorAdapter.swapCursor(null);
+
+    }
+
+    private void showDeleteConfirmationDialog(){
+        //Create an AlertDialog.Builder and set the message and click listeners
+        //for the positive and negative buttons the dialog
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_all_entries);
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //User Clicked the "Delete " button, so delete the product
+                deleteAllProduct();
+
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //User cllicked the cancel button, so dismiss the dialog
+                //and continue editing the product
+
+                if (dialogInterface!=null){
+                    dialogInterface.dismiss();
+                }
+            }
+        });
+
+        //CREAte and show the AlertDialog
+        AlertDialog alertDialog=builder.create();
+        alertDialog.show();
 
     }
 }

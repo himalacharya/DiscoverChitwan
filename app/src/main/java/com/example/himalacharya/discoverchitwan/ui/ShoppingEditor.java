@@ -171,6 +171,34 @@ public class ShoppingEditor extends AppCompatActivity implements LoaderManager.L
 
     }
 
+    private void deleteProduct(){
+
+
+        //only form delte if there is existing product
+        if (mCurrentProductUri!=null){
+
+            int rowsDeleted=getContentResolver().delete(mCurrentProductUri,null,null);
+
+
+            //Show a toast message depending on whetehr deletion successful or not
+            if (rowsDeleted==0){
+                //If no rows deleted toast error
+                Toast.makeText(this, R.string.error_deletion,Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, R.string.deletion_successful,Toast.LENGTH_SHORT).show();
+
+            }
+
+        }
+
+        //close the activity
+
+        finish();
+
+
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_shopping_edit, menu);
@@ -203,7 +231,7 @@ public class ShoppingEditor extends AppCompatActivity implements LoaderManager.L
                 return true;
 
             case R.id.action_delete:
-
+                showDeleteConfirmationDialog();
                 return true;
 
             case R.id.action_order_more:
@@ -327,6 +355,38 @@ public class ShoppingEditor extends AppCompatActivity implements LoaderManager.L
         // Create and show the AlertDialog
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void showDeleteConfirmationDialog(){
+        //Create an AlertDialog.Builder and set the message and click listeners
+        //for the positive and negative buttons the dialog
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_message);
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //User Clicked the "Delete " button, so delete the product
+                deleteProduct();
+
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //User cllicked the cancel button, so dismiss the dialog
+                //and continue editing the product
+
+                if (dialogInterface!=null){
+                    dialogInterface.dismiss();
+                }
+            }
+        });
+
+        //CREAte and show the AlertDialog
+        AlertDialog alertDialog=builder.create();
+        alertDialog.show();
+
     }
 
      @Override public void onBackPressed(){
