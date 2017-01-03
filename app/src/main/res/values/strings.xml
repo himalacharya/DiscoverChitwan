@@ -46,4 +46,7 @@
     <string name="deletion_successful">Deletion successful</string>
     <string name="delete_all_entries">Are you sure to delete all products</string>
     <string name="no_description_provided">No Description Provided</string>
+    <string name="news_channel">News Channel</string>
+    <string name="news_channel_logo">News Channel Logo</string>
+    <string name="news_stories">News Stories</string>
 </resources>

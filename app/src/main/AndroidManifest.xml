@@ -21,13 +21,13 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.ShoppingEditor"
+            android:theme="@style/AppTheme" />
 
-            android:theme="@style/AppTheme"></activity>
-        
         <provider
-            android:authorities="com.example.himalacharya.discoverchitwan"
             android:name=".data.ShoppingProvider"
-            android:exported="false"/>
+            android:authorities="com.example.himalacharya.discoverchitwan"
+            android:exported="false" />
+
     </application>
 
 </manifest>

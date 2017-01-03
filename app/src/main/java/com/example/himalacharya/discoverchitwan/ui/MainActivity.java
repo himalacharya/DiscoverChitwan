@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
 
        /* //FInd the view that shows the category
-        Button seeAndDoActivity= (Button) findViewById(R.id.activity_see_and_do);
+        Button seeAndDoActivity= (Button) findViewById(R.id.fragment_see_and_do);
         seeAndDoActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //FInd the view that shows the category
-        final Button dineActivity= (Button) findViewById(R.id.activity_dine);
+        final Button dineActivity= (Button) findViewById(R.id.fragment_dine);
         dineActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //FInd the view that shows the category
-        Button stayActivity= (Button) findViewById(R.id.activity_stay);
+        Button stayActivity= (Button) findViewById(R.id.fragment_stay);
         stayActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

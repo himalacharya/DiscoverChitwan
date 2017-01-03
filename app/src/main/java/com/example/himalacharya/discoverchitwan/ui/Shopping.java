@@ -14,13 +14,11 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.himalacharya.discoverchitwan.R;
@@ -39,7 +37,7 @@ public class Shopping extends AppCompatActivity implements LoaderManager.LoaderC
         super.onCreate(savedInstanceState);
 
 
-        setContentView(R.layout.activity_shopping);
+        setContentView(R.layout.fragment_shopping);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

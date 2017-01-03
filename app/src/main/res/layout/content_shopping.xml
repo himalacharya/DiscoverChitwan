@@ -12,7 +12,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.himalacharya.discoverchitwan.ui.Shopping"
-    tools:showIn="@layout/activity_shopping">
+    tools:showIn="@layout/fragment_shopping">
 
     <RelativeLayout
         android:layout_width="wrap_content"
