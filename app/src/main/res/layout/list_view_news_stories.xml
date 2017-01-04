@@ -12,15 +12,16 @@
 
 
     <TextView
-        android:id="@+id/weather_day"
+        android:id="@+id/news_channel_author"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="@string/news_channel"
         android:layout_weight="0.2"
         android:layout_alignParentLeft="true"
         />
 
     <ImageView
-        android:id="@+id/weather_day_logo"
+        android:id="@+id/news_channel_logo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.2"
@@ -29,14 +30,25 @@
         android:maxHeight="42dp"
         android:maxWidth="42dp"
         android:layout_marginLeft="3dp"
-         />
+        android:text="@string/news_channel_logo" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.6"
+        android:layout_weight="0.2"
+        android:lines="2"
+        android:id="@+id/news_channel_date"
+
+
+        />
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
         android:lines="4"
-        android:id="@+id/weather_temperature"
+        android:id="@+id/news_channel_scrollingnews"
         android:text="@string/news_stories"
 
         />

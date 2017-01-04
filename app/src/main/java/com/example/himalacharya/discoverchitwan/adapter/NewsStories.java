@@ -1,5 +1,7 @@
 package com.example.himalacharya.discoverchitwan.adapter;
 
+import java.util.Date;
+
 /**
  * Created by Himal Acharya on 2017-01-02.
  */
@@ -9,6 +11,7 @@ public class NewsStories {
     private String newsChannelName;
     private String descriptionNewsStory;
     public int imageResourceId=No_IMAGE_PROVIDED;
+    public String date;
 
     private static final int No_IMAGE_PROVIDED=-1;
 
@@ -36,10 +39,19 @@ public class NewsStories {
         this.imageResourceId = imageResourceId;
     }
 
-    public NewsStories(String newsChannelName, String descriptionNewsStory, int imageResourceId) {
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public NewsStories(String newsChannelName, String descriptionNewsStory, int imageResourceId, String date) {
         this.newsChannelName = newsChannelName;
         this.descriptionNewsStory = descriptionNewsStory;
         this.imageResourceId = imageResourceId;
+        this.date = date;
     }
 
     //returns whether it has image or not

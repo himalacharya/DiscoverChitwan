@@ -38,8 +38,11 @@ public class NewsStoriesAdapter extends ArrayAdapter<NewsStories> {
         }
         //Find the text view in list_view_news_stories.xml
 
-        TextView textView= (TextView) rootView.findViewById(R.id.news_channel);
+        TextView textView= (TextView) rootView.findViewById(R.id.news_channel_author);
         textView.setText(newsStories.getNewsChannelName());
+
+        TextView textView2= (TextView) rootView.findViewById(R.id.news_channel_date);
+        textView2.setText(newsStories.getDate());
 
         ImageView imageView= (ImageView) rootView.findViewById(R.id.news_channel_logo);
 
