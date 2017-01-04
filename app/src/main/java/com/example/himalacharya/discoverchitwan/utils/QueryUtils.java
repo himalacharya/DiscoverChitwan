@@ -173,7 +173,9 @@ public class QueryUtils {
 
                 String description=currentnews.getString("description");
 
-                NewsStories newsStories=new NewsStories(author,description, R.drawable.abc,publishedAt);
+                String newsURL=currentnews.getString("url");
+
+                NewsStories newsStories=new NewsStories(author,description, R.drawable.abc,publishedAt,newsURL);
 
                 //Add news to the lsit of news stories
                 newsStoriesList.add(newsStories);

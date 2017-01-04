@@ -10,8 +10,11 @@ public class NewsStories {
 
     private String newsChannelName;
     private String descriptionNewsStory;
-    public int imageResourceId=No_IMAGE_PROVIDED;
-    public String date;
+    private int imageResourceId=No_IMAGE_PROVIDED;
+    private String date;
+
+   private String newsURL;
+
 
     private static final int No_IMAGE_PROVIDED=-1;
 
@@ -47,11 +50,20 @@ public class NewsStories {
         this.date = date;
     }
 
-    public NewsStories(String newsChannelName, String descriptionNewsStory, int imageResourceId, String date) {
+    public String getNewsURL() {
+        return newsURL;
+    }
+
+    public void setNewsURL(String newsURL) {
+        this.newsURL = newsURL;
+    }
+
+    public NewsStories(String newsChannelName, String descriptionNewsStory, int imageResourceId, String date, String newsURL) {
         this.newsChannelName = newsChannelName;
         this.descriptionNewsStory = descriptionNewsStory;
         this.imageResourceId = imageResourceId;
         this.date = date;
+        this.newsURL = newsURL;
     }
 
     //returns whether it has image or not

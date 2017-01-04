@@ -60,14 +60,14 @@ public class NewsStoriesFragment extends Fragment {
 
         // Set an item click listener on the ListView, which sends an intent to a web browser
         // to open a website with more information about the selected news.
-       /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 //Find the current news that was clciked on
                 NewsStories currentnews=mAdapter.getItem(position);
 
                 //Convert the String URL into URI object (to pass inti Intent Constructor)
-                Uri newsUri=Uri.parse(currentnews.getUrl());
+                Uri newsUri=Uri.parse(currentnews.getNewsURL());
 
                 //Create a new intent to view the earthquake URi
                 Intent websiteIntent=new Intent(Intent.ACTION_VIEW,newsUri);
@@ -75,7 +75,7 @@ public class NewsStoriesFragment extends Fragment {
                 //Start the intengt to launch a new activity
                 startActivity(websiteIntent);
             }
-        });*/
+        });
 
         //Start the Async Task to fetch the newsstories data
         new NewsStoriesAsyncTask().execute(NEWS_REQUEST_URL);
@@ -115,6 +115,8 @@ public class NewsStoriesFragment extends Fragment {
                 mAdapter.addAll(data);
             }
         }
+
+
     }
 
 
