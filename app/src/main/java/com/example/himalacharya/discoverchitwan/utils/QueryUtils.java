@@ -29,43 +29,41 @@ public class QueryUtils {
 
     //Tag for Log messages
 
-    public static final String LOG_TAG=QueryUtils.class.getSimpleName();
+    public static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     //Query the News API data and return an object to represent a single news
 
-    public static List<NewsStories> fetchNewsData(String requestUrl){
+    public static List<NewsStories> fetchNewsData(String requestUrl) {
         //create a URL object
-        URL url=createUrl(requestUrl);
+        URL url = createUrl(requestUrl);
 
         //Perform  HTTP request to the URL and receive a JSON rsponse back
-        String jsonResponse=null;
+        String jsonResponse = null;
 
         try {
-            jsonResponse=makeHTTPRequest(url);
-        }catch (IOException e){
-            Log.e(LOG_TAG,"Error closing input Stream",e);
+            jsonResponse = makeHTTPRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error closing input Stream", e);
 
         }
 
         //Extract relevant fields from the JSON and create a list
-        List<NewsStories> newsStories=extractFeatureFromJson(jsonResponse);
+        List<NewsStories> newsStories = extractFeatureFromJson(jsonResponse);
 
         //return a list
         return newsStories;
 
 
-
-
     }
 
     //Return new URL object from the given string URL
-    private static URL createUrl(String stringURL){
-        URL url=null;
+    private static URL createUrl(String stringURL) {
+        URL url = null;
 
         try {
-            url=new URL(stringURL);
+            url = new URL(stringURL);
         } catch (MalformedURLException e) {
-            Log.e(LOG_TAG,"Error with creating URL ",e);
+            Log.e(LOG_TAG, "Error with creating URL ", e);
 
         }
 
@@ -101,7 +99,7 @@ public class QueryUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+            Log.e(LOG_TAG, "Problem retrieving the News JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -119,10 +117,10 @@ public class QueryUtils {
      */
 
     private static String readFromStream(InputStream inputStream) throws IOException {
-        StringBuilder output=new StringBuilder();
+        StringBuilder output = new StringBuilder();
 
 
-        if (inputStream!=null){
+        if (inputStream != null) {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String line = reader.readLine();
@@ -140,50 +138,48 @@ public class QueryUtils {
      * about the first earthquake from the input earthquakeJSON string.
      */
 
-    private static List<NewsStories> extractFeatureFromJson(String newsstoriesJSON){
+    private static List<NewsStories> extractFeatureFromJson(String newsstoriesJSON) {
 
         //If the JSON string is empty or null, then return early
-        if (TextUtils.isEmpty(newsstoriesJSON)){
+        if (TextUtils.isEmpty(newsstoriesJSON)) {
             return null;
         }
 
         //Create an empt ArrayList that we can start adding news stories
-        List<NewsStories> newsStoriesList=new ArrayList<>();
+        List<NewsStories> newsStoriesList = new ArrayList<>();
 
 
-        try{
+        try {
 
-            JSONObject baseJsonResponse=new JSONObject(newsstoriesJSON);
-            JSONArray featureArray=baseJsonResponse.getJSONArray("articles");
+            JSONObject baseJsonResponse = new JSONObject(newsstoriesJSON);
+            JSONArray featureArray = baseJsonResponse.getJSONArray("articles");
 
             //For each news array , create an Object
-            for (int i=0;i<featureArray.length();i++){
+            for (int i = 0; i < featureArray.length(); i++) {
 
 
                 //Get a single news at position within the list of newsstories
-                JSONObject currentnews=featureArray.getJSONObject(i);
+                JSONObject currentnews = featureArray.getJSONObject(i);
 
                 //Extract the author , logo, date, description news
-                String author=currentnews.getString("author");
+                String author = currentnews.getString("author");
 
-                String urlToImage=currentnews.getString("urlToImage");
+                String urlToImage = currentnews.getString("urlToImage");
 
-                String publishedAt=currentnews.getString("publishedAt");
+                String publishedAt = currentnews.getString("publishedAt");
 
 
-                String description=currentnews.getString("description");
+                String description = currentnews.getString("description");
 
-                String newsURL=currentnews.getString("url");
+                String newsURL = currentnews.getString("url");
 
-                NewsStories newsStories=new NewsStories(author,description, R.drawable.abc,publishedAt,newsURL);
+                NewsStories newsStories = new NewsStories(author, description, R.drawable.abc, publishedAt, newsURL);
 
                 //Add news to the lsit of news stories
                 newsStoriesList.add(newsStories);
 
 
             }
-
-
 
 
         } catch (JSONException e) {

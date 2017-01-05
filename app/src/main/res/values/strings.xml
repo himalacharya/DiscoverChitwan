@@ -50,4 +50,5 @@
     <string name="news_channel_logo">News Channel Logo</string>
     <string name="news_stories">News Stories</string>
     <string name="date">Date</string>
+    <string name="no_newsstories">No News Stories found</string>
 </resources>

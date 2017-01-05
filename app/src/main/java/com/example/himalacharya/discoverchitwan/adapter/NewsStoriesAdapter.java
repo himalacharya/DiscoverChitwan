@@ -2,6 +2,7 @@ package com.example.himalacharya.discoverchitwan.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import java.util.List;
 public class NewsStoriesAdapter extends ArrayAdapter<NewsStories> {
 
 
-    public NewsStoriesAdapter(Context context,ArrayList<NewsStories> objects) {
+    public NewsStoriesAdapter(Context context, ArrayList<NewsStories> objects) {
         super(context, 0, objects);
     }
 
@@ -29,22 +30,27 @@ public class NewsStoriesAdapter extends ArrayAdapter<NewsStories> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //Get the object at the location in the list
-        NewsStories newsStories=getItem(position);
-        View rootView=convertView;
+        NewsStories newsStories = getItem(position);
+        View rootView = convertView;
 
-        if (rootView==null){
-            rootView=LayoutInflater.from(getContext()).inflate(R.layout.list_view_news_stories,parent,false);
+        if (rootView == null) {
+            rootView = LayoutInflater.from(getContext()).inflate(R.layout.list_view_news_stories, parent, false);
 
         }
         //Find the text view in list_view_news_stories.xml
 
-        TextView textView= (TextView) rootView.findViewById(R.id.news_channel_author);
+        TextView textView = (TextView) rootView.findViewById(R.id.news_channel_author);
         textView.setText(newsStories.getNewsChannelName());
 
-        TextView textView2= (TextView) rootView.findViewById(R.id.news_channel_date);
-        textView2.setText(newsStories.getDate());
+        TextView textView2 = (TextView) rootView.findViewById(R.id.news_channel_date);
+        if (newsStories.getDate().isEmpty()) {
+            textView2.setVisibility(View.INVISIBLE);
+        } else {
+            textView2.setVisibility(View.VISIBLE);
+            textView2.setText(newsStories.getDate());
+        }
 
-        ImageView imageView= (ImageView) rootView.findViewById(R.id.news_channel_logo);
+        ImageView imageView = (ImageView) rootView.findViewById(R.id.news_channel_logo);
 
         if (newsStories.hasImage()) {
 
@@ -54,12 +60,12 @@ public class NewsStoriesAdapter extends ArrayAdapter<NewsStories> {
             //make sure image is visible
 
             imageView.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             //Otherwise hide the image
             imageView.setVisibility(View.GONE);
         }
 
-        TextView textView1= (TextView) rootView.findViewById(R.id.news_channel_scrollingnews);
+        TextView textView1 = (TextView) rootView.findViewById(R.id.news_channel_scrollingnews);
         textView1.setText(newsStories.getDescriptionNewsStory());
         return rootView;
     }
