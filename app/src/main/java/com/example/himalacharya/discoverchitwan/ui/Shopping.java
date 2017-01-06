@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,7 +28,7 @@ import com.example.himalacharya.discoverchitwan.data.ShoppingContract;
 
 public class Shopping extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int PRODUCT_LOADER=0;
+    private static final int PRODUCT_LOADER = 0;
 
     ProductCursorAdapter productCursorAdapter;
 
@@ -40,6 +41,10 @@ public class Shopping extends AppCompatActivity implements LoaderManager.LoaderC
         setContentView(R.layout.fragment_shopping);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Enable the Up button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -68,10 +73,10 @@ public class Shopping extends AppCompatActivity implements LoaderManager.LoaderC
         shoppingListItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent intent=new Intent(Shopping.this,ShoppingEditor.class);
+                Intent intent = new Intent(Shopping.this, ShoppingEditor.class);
 
                 //For content URi, with specific id
-                Uri currentProductUri= ContentUris.withAppendedId(ShoppingContract.ShoppingEntry.CONTENT_URI,id);
+                Uri currentProductUri = ContentUris.withAppendedId(ShoppingContract.ShoppingEntry.CONTENT_URI, id);
 
                 //set the URI on the data field of the intent
                 intent.setData(currentProductUri);
@@ -82,12 +87,10 @@ public class Shopping extends AppCompatActivity implements LoaderManager.LoaderC
 
 
         //Kick off the loader
-        getSupportLoaderManager().initLoader(PRODUCT_LOADER,null,this);
+        getSupportLoaderManager().initLoader(PRODUCT_LOADER, null, this);
 
 
-
-
-       // insertProduct();
+        // insertProduct();
         //displaying Database info
         //displayDatabaseinfo();
     }
@@ -200,13 +203,13 @@ public class Shopping extends AppCompatActivity implements LoaderManager.LoaderC
        /* //Insert the new row, returning the primary key value of the new row
         long newRowId = database.insert(ShoppingContract.ShoppingEntry.TABLE_NAME, null, values);
 */
-        Uri uri=getContentResolver().insert(ShoppingContract.ShoppingEntry.CONTENT_URI,values);
+        Uri uri = getContentResolver().insert(ShoppingContract.ShoppingEntry.CONTENT_URI, values);
         Toast.makeText(this, "Successful", Toast.LENGTH_SHORT).show();
 
     }
 
-    public void deleteAllProduct(){
-        getContentResolver().delete(ShoppingContract.ShoppingEntry.CONTENT_URI,null,null);
+    public void deleteAllProduct() {
+        getContentResolver().delete(ShoppingContract.ShoppingEntry.CONTENT_URI, null, null);
 
     }
 
@@ -230,10 +233,12 @@ public class Shopping extends AppCompatActivity implements LoaderManager.LoaderC
             case R.id.action_delete_all_entries:
                 showDeleteConfirmationDialog();
                 return true;
+
+
+
         }
         return super.onOptionsItemSelected(menuItem);
     }
-
 
 
     @Override
@@ -244,7 +249,7 @@ public class Shopping extends AppCompatActivity implements LoaderManager.LoaderC
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projections= {
+        String[] projections = {
                 ShoppingContract.ShoppingEntry._ID,
                 ShoppingContract.ShoppingEntry.COLUMN_NAME,
                 ShoppingContract.ShoppingEntry.COLUMN_PRICE,
@@ -275,10 +280,10 @@ public class Shopping extends AppCompatActivity implements LoaderManager.LoaderC
 
     }
 
-    private void showDeleteConfirmationDialog(){
+    private void showDeleteConfirmationDialog() {
         //Create an AlertDialog.Builder and set the message and click listeners
         //for the positive and negative buttons the dialog
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.delete_all_entries);
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
@@ -295,14 +300,14 @@ public class Shopping extends AppCompatActivity implements LoaderManager.LoaderC
                 //User cllicked the cancel button, so dismiss the dialog
                 //and continue editing the product
 
-                if (dialogInterface!=null){
+                if (dialogInterface != null) {
                     dialogInterface.dismiss();
                 }
             }
         });
 
         //CREAte and show the AlertDialog
-        AlertDialog alertDialog=builder.create();
+        AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
     }
